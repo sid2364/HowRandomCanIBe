@@ -110,6 +110,7 @@ def createAndFillDbAndTable():
 	conn.execute("INSERT INTO EMPLOYEES (ID,NAME,MANAGERID) VALUES (7, 'F', 8 )");
 	conn.execute("INSERT INTO EMPLOYEES (ID,NAME,MANAGERID) VALUES (8, 'G', 9 )");
 	conn.execute("INSERT INTO EMPLOYEES (ID,NAME,MANAGERID) VALUES (9, 'H', NULL )");
+	
 	cursor = conn.execute("SELECT ID, NAME, MANAGERID from EMPLOYEES")
 	for row in cursor:
 		data_dict[row[0]] = {eid:row[0], name:row[1], managerid:row[2], subords:[]}
