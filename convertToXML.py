@@ -31,12 +31,18 @@ def replaceitem(obj, key, new_item):
 		obj[key] = new_item
 	for k, v in obj.items():
 		if isinstance(v,dict):
-			item = _finditem(v, key, new_item)
+			item = finditem(v, key, new_item)
 			if item is not None:
 				v[key] = new_item
 	return obj
 
+
 def parse_dict(data_dict):
+	'''
+	Takes input a dictionary that contains information
+	about all employees and returns a heirarchically
+	arranged dictionary that reflects the manager heirarchy.
+	'''
 	parsed_data_dict = {}
 	for key in data_dict:
 		parsed_data_dict[key] = {}
@@ -49,7 +55,6 @@ def parse_dict(data_dict):
 				continue
 			if mid == data_dict[i][eid]:
 				parsed_data_dict[i][subords].append(data_dict[key])
-				#data_dict[key] = replaceitem(data_dict[key], topmost, mid)
 				data_dict[i][subords].append(data_dict[key])
 				del parsed_data_dict[key]
 
@@ -57,24 +62,38 @@ def parse_dict(data_dict):
 
 
 
-def recurseThrough(pd, data_dict, xml_root):
-	#print("In recurseThrough: ", pd[name], pd[eid])
+def addToXml(pd, data_dict, xml_root):
+	'''
+	This function recurses through the dictionary
+	from the second level on and adds a new XML 
+	element for each item and calls this function 
+	for each of it's sub-items passing itself as the root
+	so the XML is formed with this heirarchy.
+	'''
 	node = ET.SubElement(xml_root, "Node", name=pd[name], eid=str(pd[eid]))
 	for sub in pd[subords]:
-		recurseThrough(sub, data_dict, node)
+		addToXml(sub, data_dict, node)
 	return
 
 def createXml(parsed_data_dict, data_dict, xml_root):
+	'''
+	Driver function for the root elements (or 'top-most managers')
+	for addToXml(). It calls addToXml() for each 'top-most manager'.
+	'''
 	for key in parsed_data_dict:
 		node = ET.SubElement(xml_root, "Node", name=data_dict[key][name], eid=str(data_dict[key][eid]))
 
 		subs = parsed_data_dict[key][subords]
 		for sub in subs:
-			recurseThrough(sub, data_dict, node)
+			addToXml(sub, data_dict, node)
 	tree = ET.ElementTree(xml_root)
 	return tree
 
 def createAndFillDbAndTable():
+	'''
+	This function is simply to create a database and table, and add 
+	entries into it. It then parses the database and returns a dictionary.
+	'''
 	data_dict = {}
 	conn = sqlite3.connect('generic_employee.db')
 	conn.executescript('DROP TABLE IF EXISTS EMPLOYEES;')
@@ -103,12 +122,12 @@ if __name__ == "__main__":
 	try:
 		parsed_data_dict = parse_dict(data_dict)
 	except KeyError as e:
+		'''
+		KeyError will occur when there exists a 'loop' in the manager heirarchy.
+		For e.g., 3 -> 4 -> 2 -> 3, is invalid.
+		'''
 		print("Manager heirarchy is invalid!\nCannot proceed with current setup.")
 		sys.exit(1)
-
-	# print(json.dumps(parsed_data_dict, indent=4))
-	# print("## ## ## ## ## ## ## ## ##")
-	# print(json.dumps(data_dict, indent=4))
 
 	root = ET.Element("EmpInfo")
 	tree = createXml(parsed_data_dict, data_dict, root)
