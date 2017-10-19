@@ -57,7 +57,7 @@ def parse_dict(data_dict):
 				parsed_data_dict[i][subords].append(data_dict[key])
 				data_dict[i][subords].append(data_dict[key])
 				del parsed_data_dict[key]
-
+	print(json.dumps(parsed_data_dict, indent=4))
 	return parsed_data_dict
 
 
@@ -115,6 +115,7 @@ def createAndFillDbAndTable():
 	for row in cursor:
 		data_dict[row[0]] = {eid:row[0], name:row[1], managerid:row[2], subords:[]}
 
+	print(json.dumps(data_dict, indent=4))
 	return data_dict
 
 
