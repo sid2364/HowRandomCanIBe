@@ -17,4 +17,4 @@ item1 = MenuItem(name='Margharita', description='Some cheesy one-liner.',
 	course='Entree', price="Rs.200", restaurant=rest1)
 session.add(item1)
 session.commit()
-print(session.query(MenuItem).all())
+#print(session.query(MenuItem).all())
