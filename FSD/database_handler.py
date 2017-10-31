@@ -16,12 +16,18 @@ def getAllRestaurants():
 
 def getNameOfRestaurantFromID(id_):
 	session = DBSession()
-	restaurant = session.query(Restaurant).filter_by(id=id_)
+	restaurant = session.query(Restaurant).filter_by(id=id_).one()
 	return restaurant.name
 
-def updateNameForID(name, id_):
+def deleteRestaurantFromID(id_):
 	session = DBSession()
-	new_restaurant = session.query(Restaurant).filter_by(id=id_).one() 
+	session.query(Restaurant).filter_by(id=id_).delete()
+	session.commit()
+	return
+
+def updateNameForID(id_, name):
+	session = DBSession()
+	new_restaurant = session.query(Restaurant).filter_by(id=int(id_)).one() 
 	new_restaurant.name = name
 	session.add(new_restaurant)
 	session.commit()

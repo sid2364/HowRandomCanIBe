@@ -1,5 +1,6 @@
+import time
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
-from database_handler import getAllRestaurants, getNameOfRestaurantFromID, updateNameForID, createNew
+from database_handler import getAllRestaurants, getNameOfRestaurantFromID, updateNameForID, createNew, deleteRestaurantFromID
 import cgi
 
 class webserverHandler(BaseHTTPRequestHandler):
@@ -34,40 +35,73 @@ class webserverHandler(BaseHTTPRequestHandler):
 				restaurants = getAllRestaurants()
 				for restaurant in restaurants:
 					output += "<h2>%s</h2>" % restaurant.name
-					output += "<a href='/%s/edit'>Edit</a><br>" % restaurant.id 
-					output += "<a href='/%s/delete'>Delete</a>" % restaurant.id
+					output += "<a href='/restaurants/%s/edit'>Edit</a><br>" % restaurant.id 
+					output += "<a href='/restaurants/%s/delete'>Delete</a>" % restaurant.id
 					output += "<br>"
 				
 				output += "</body></html>"
 				print(output)
 				self.wfile.write(output)
 				return
+
 			if self.path.endswith('/edit'):
 				self.send_response(200)
 				self.send_header('Content-type', 'text/html')
 				self.end_headers()
 
 				id_r = self.path.split('/')[-2]
+				print(self.path, id_r)
 				# since URL is in the form of .../restaurants/<id>/edit/
 				# and we need the second to last part
 				
 				try:
 					res_name = getNameOfRestaurantFromID(id_r)
 				except:
+					print("ERROR")
 					raise IOError
-
+				
 				output = ""
 				output += "<html><body>"
 				output += "<h2>Edit details about %s" % res_name
 				output += "<form method='POST', enctype='multipart/form-data' " + \
 				"action='/"+id_r+"/edit'><h2>What do you wanna change here?</h2> " + \
-				"<input name='newname' type='text'><input type='submit' " + \
+				"<input name='newname' type='text' placeholder='"+res_name+"'><input type='submit' " + \
 				"value='Submit'></form>"
 
 				output += "</body></html>"
 				print(output)
 				self.wfile.write(output)
 				return
+
+			if self.path.endswith('/delete'):
+				self.send_response(200)
+				self.send_header('Content-type', 'text/html')
+				self.end_headers()
+
+				id_r = self.path.split('/')[-2]
+				print(self.path, id_r)
+				# since URL is in the form of .../restaurants/<id>/edit/
+				# and we need the second to last part
+				try:
+					res_name = getNameOfRestaurantFromID(id_r)
+				except:
+					print("ERROR")
+					raise IOError
+
+				
+				output = ""
+				output += "<html><body>"
+				output += "<h2>Sure about deleting %s?" % res_name
+				output += "<form method='POST', enctype='multipart/form-data' " + \
+				"action='/"+id_r+"/delete'><h2>Confirm</h2> " + \
+				"<input type='submit' " + \
+				"value='Submit'></form>"
+
+				output += "</body></html>"
+				print(output)
+				self.wfile.write(output)
+				return
+
 			if self.path.endswith("/restaurants/new"):
 				self.send_response(200)
 				self.send_header('Content-type', 'text/html')
@@ -110,16 +144,18 @@ class webserverHandler(BaseHTTPRequestHandler):
 				self.wfile.write(output)
 				print(output)
 				return
+
 			if self.path.endswith("/edit"):
 				self.send_response(301)
 				self.end_headers()
 
 				id_r = self.path.split('/')[-2]
+				print(id_r)
 
 				ctype, pdict = cgi.parse_header(self.headers.getheader('content-type'))
 				if ctype == 'multipart/form-data':
 					fields = cgi.parse_multipart(self.rfile, pdict)
-					newname = fields.get('newname')
+					newname = fields.get('newname')[0]
 
 				updateNameForID(id_r, newname)
 
@@ -132,9 +168,23 @@ class webserverHandler(BaseHTTPRequestHandler):
 				self.wfile.write(output)
 				print(output)
 				return
+
+			if self.path.endswith("/delete"):
+				self.send_response(301)
+
+				id_r = self.path.split('/')[-2]
+				print(id_r)
+
+				deleteRestaurantFromID(id_r)
+
+				self.send_header("Content-type", "text/html")
+				self.send_header("Location", "/restaurants")
+				self.end_headers()
+				return
+
 			if self.path.endswith("/restaurants/new"):
 				self.send_response(301)
-				self.end_headers()
+				#self.end_headers()
 
 				ctype, pdict = cgi.parse_header(self.headers.getheader('content-type'))
 				if ctype == 'multipart/form-data':
@@ -143,14 +193,9 @@ class webserverHandler(BaseHTTPRequestHandler):
 
 				createNew(newname)
 
-				output = ''
-				output += '<html><body>'
-				output += '<h1>New restaurant created: %s</h1>' % (newname)
-
-				output += "<a href='/restaurants'>Back to the home page</a>"
-				output += "</body></html>"
-				self.wfile.write(output)
-				print(output)
+				self.send_header("Content-type", "text/html")
+				self.send_header("Location", "/restaurants")
+				self.end_headers()
 				return
 		except IOError:
 			self.send_error(404, 'File not found: %s' % self.path)
