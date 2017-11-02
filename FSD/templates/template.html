@@ -1,8 +1,22 @@
 <html>
-
+<head>
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+</head>
 <body>
 
 <h1>{{restaurant.name}}</h1>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+
+<div>
+{% for message in messages %}
+  <p><strong>{{message}}</strong></p>
+  {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+
 
 <br>
 
