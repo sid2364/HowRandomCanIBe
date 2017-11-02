@@ -1,12 +1,9 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-
 from db_setup import Restaurant, Base, MenuItem
 
 engine = create_engine('sqlite:///menu.db')
-
 Base.metadata.bind = engine
-
 DBSession = sessionmaker(bind=engine)
 
 def getAllRestaurants():
