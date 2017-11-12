@@ -3,29 +3,29 @@
 	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
+<p><a href="{{url_for('newRestaurant')}}">Add a restaurant</a></p>
 {% with messages = get_flashed_messages() %}
-{% if messages %}
-
-<div>
-{% for message in messages %}
-  <p><strong>{{message}}</strong></p>
-  {% endfor %}
-</div>
-
-{% endif %}
+	{% if messages %}
+		<div>
+		{% for message in messages %}
+			<p><strong>{{message}}</strong></p>
+		{% endfor %}
+		</div>
+	{% endif %}
 {% endwith %}
 
 
 {% for restaurant in restaurants %}
-<a href="{{url_for('showRestaurant', restaurant_id=restaurant.id)}}"><h1>{{restaurant.name}}</h1></a>
-
-{% for i in items %}
-{% if i.restaurant_id == restaurant.id %}
-<p>{{i.name}}</p>
-{% endif %}
-{% endfor %}
-<br>
-
+	<a href="{{url_for('showRestaurant', restaurant_id=restaurant.id)}}"><h1>{{restaurant.name}}</h1></a>
+	{% for i in items %}
+		{% if i.restaurant_id == restaurant.id %}
+			<p>{{i.name}}</p>
+		{% endif %}
+	{% else %}
+		<p>This restaurant has no items on its menu yet!</p>
+		<p>Block will never work because of the logic I'm using for iterating through items for each restaurant!</p>
+	{% endfor %}
+	<br>
 {% endfor %}
 
 </body>

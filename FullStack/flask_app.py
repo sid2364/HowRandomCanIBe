@@ -23,6 +23,49 @@ def showRestaurant(restaurant_id=1):
 	items = session.query(MenuItem).filter_by(restaurant_id = restaurant.id)
 	return render_template("restaurant.html", restaurant = restaurant, items = items)
 
+@app.route("/restaurants/new", methods=['GET', 'POST'])
+def newRestaurant():
+	if request.method == 'POST':
+		newRestaurant = Restaurant(
+			name=request.form['restaurant_name'], 
+			)
+		flash("New restaurant, " + request.form['restaurant_name'] + ", added!") 
+		# should really be done after commit
+		session.add(newRestaurant)
+		session.commit()
+		return redirect(url_for('showRestaurants'))
+	else:
+		return render_template("new_restaurant.html")
+
+@app.route("/restaurants/<int:restaurant_id>/edit", methods=['GET', 'POST'])
+def editRestaurant(restaurant_id):
+	restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
+	if request.method == 'POST':
+		newRestaurant = Restaurant(
+			name=request.form['restaurant_name'], 
+			)
+		flash("Restaurant name changed to " + request.form['restaurant_name'] + "!") 
+		# should really be done after commit
+		restaurant.name = request.form['restaurant_name']
+		session.commit()
+		return redirect(url_for('showRestaurants'))
+	else:
+		return render_template("edit_restaurant.html", restaurant = restaurant)
+
+@app.route("/restaurants/<int:restaurant_id>/delete", methods=['GET', 'POST'])
+def deleteRestaurant(restaurant_id):
+	restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
+	menu_item = session.query(MenuItem).filter_by(id = menu_id).one()
+	if request.method == 'POST':
+		flash("Menu item, " + menu_item.name + ", deleted!")
+		# should really be done after commit
+		session.query(MenuItem).filter_by(id=menu_item.id).delete()
+		session.commit()
+		return redirect(url_for('showRestaurant', restaurant_id=restaurant.id))
+	else:
+		return render_template('delete_menu_item.html', restaurant=restaurant, menu_item=menu_item)
+
+
 @app.route("/restaurants/<int:restaurant_id>/new", methods=['GET', 'POST'])
 def newMenuItem(restaurant_id):
 	restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
