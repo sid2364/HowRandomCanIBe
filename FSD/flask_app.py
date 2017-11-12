@@ -12,11 +12,16 @@ app = Flask(__name__)
 
 @app.route("/")
 @app.route("/restaurants/")
+def showRestaurants():
+	restaurants = session.query(Restaurant).all()
+	items = session.query(MenuItem).all()
+	return render_template("restaurants.html", restaurants = restaurants, items = items)
+
 @app.route("/restaurants/<int:restaurant_id>/")
 def showRestaurant(restaurant_id=1):
 	restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
 	items = session.query(MenuItem).filter_by(restaurant_id = restaurant.id)
-	return render_template("template.html", restaurant = restaurant, items = items)
+	return render_template("restaurant.html", restaurant = restaurant, items = items)
 
 @app.route("/restaurants/<int:restaurant_id>/new", methods=['GET', 'POST'])
 def newMenuItem(restaurant_id):

@@ -212,3 +212,10 @@ def main():
 
 if __name__ == "__main__":
 	main()
+
+	'''
+	For an actual project, create all the routes first. So there is a 
+	"virtual" map of the entire website. Add structure first and then functionality.
+	Once that is in place, move forward with building one functionality at a time,
+	and only moving on the next one when the entire thing is completed.
+	'''
