@@ -55,15 +55,14 @@ def editRestaurant(restaurant_id):
 @app.route("/restaurants/<int:restaurant_id>/delete", methods=['GET', 'POST'])
 def deleteRestaurant(restaurant_id):
 	restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
-	menu_item = session.query(MenuItem).filter_by(id = menu_id).one()
 	if request.method == 'POST':
-		flash("Menu item, " + menu_item.name + ", deleted!")
+		flash("Restaurant, " + restaurant.name + ", deleted!")
 		# should really be done after commit
-		session.query(MenuItem).filter_by(id=menu_item.id).delete()
+		session.query(Restaurant).filter_by(id=restaurant_id).delete()
 		session.commit()
-		return redirect(url_for('showRestaurant', restaurant_id=restaurant.id))
+		return redirect(url_for('showRestaurants'))
 	else:
-		return render_template('delete_menu_item.html', restaurant=restaurant, menu_item=menu_item)
+		return render_template('delete_restaurant.html', restaurant=restaurant)
 
 
 @app.route("/restaurants/<int:restaurant_id>/new", methods=['GET', 'POST'])
