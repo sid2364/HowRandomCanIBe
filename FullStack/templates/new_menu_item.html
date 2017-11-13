@@ -5,12 +5,26 @@
 <body>
 <h1>Add menu item to {{restaurant.name}}</h1>
 
+{% with messages = get_flashed_messages() %}
+	{% if messages %}
+		<div>
+		{% for message in messages %}
+			<p><strong>{{message}}</strong></p>
+		{% endfor %}
+		</div>
+	{% endif %}
+{% endwith %}
+
 <div>
 
 <form action="{{url_for('newMenuItem', restaurant_id=restaurant.id)}}" method='post'>
 	Menu item:<br><input type='text' name='menu_item'><br><br>
 	Price:<br><input type='text' name='price'><br><br>
 	Description:<br><input type='text' name='description'><br><br>
+	Course:<br>
+	{% for c in courses %}
+		<input type="radio" name="course" value="{{c}}">{{c}}<br>
+	{% endfor %}
 	<input type='submit' value='Create'>
 </form>
 

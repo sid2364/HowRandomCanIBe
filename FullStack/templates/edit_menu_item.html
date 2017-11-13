@@ -5,6 +5,16 @@
 <body>
 <h1>Edit menu item, {{menu_item.name}}, for {{restaurant.name}}</h1>
 
+{% with messages = get_flashed_messages() %}
+	{% if messages %}
+		<div>
+		{% for message in messages %}
+			<p><strong>{{message}}</strong></p>
+		{% endfor %}
+		</div>
+	{% endif %}
+{% endwith %}
+
 <div>
 
 <a href="{{url_for('showRestaurant', restaurant_id=restaurant.id)}}">Cancel</a>
@@ -17,6 +27,15 @@
 	Menu item:<br><input type='text' name='menu_item' value="{{menu_item.name}}"><br><br>
 	Price:<br><input type='text' name='price' value="{{menu_item.price}}"><br><br>
 	Description:<br><input type='text' name='description' value="{{menu_item.description}}"><br><br>
+	Course:<br>
+	{% for c in courses %}
+		{% if c == menu_item.course %}
+			<input type="radio" name="course" value="{{c}}" checked>{{c}}<br>
+		{% else %}
+			<input type="radio" name="course" value="{{c}}">{{c}}<br>
+		{% endif %}
+	{% endfor %}
+	<br>
 	<input type='submit' value='Submit Changes'>
 </form>
 
