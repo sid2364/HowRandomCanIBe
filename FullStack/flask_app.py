@@ -23,6 +23,7 @@ def showRestaurant(restaurant_id=1):
 	items = session.query(MenuItem).filter_by(restaurant_id = restaurant.id)
 	return render_template("restaurant.html", restaurant = restaurant, items = items)
 
+
 @app.route("/restaurants/new", methods=['GET', 'POST'])
 def newRestaurant():
 	if request.method == 'POST':
