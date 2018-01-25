@@ -5,9 +5,10 @@ MaxHeap would just have the comparisons
 in heapifyUp() and heapifyDown() reversed.
 '''
 class Heap(object):
-	def __init__(self):
+	def __init__(self, maxHeap=False):
 		self.size_ = 0
 		self.heap_ = []
+		self.maxHeap_ = maxHeap
 	def swap(self, firstIndex, secondIndex):
 		'''
 		If there is an IndexError, great!
@@ -86,7 +87,8 @@ class Heap(object):
 		Largest element is at the top,
 		compare with both children,
 		while element is larger than left child,
-		swap the smaller of right & left child with current
+		swap the smaller (or larger with max heap)
+		of right & left child with current
 		'''
 		if self.size_ == 0:
 			return
@@ -99,16 +101,25 @@ class Heap(object):
 			left, left_index = self.getLeftChildOf(currentIndex)
 			if left is not None:
 				if right is not None:
-					smaller_index = right_index if right < left else left_index
+					if self.maxHeap_: # swap the larger element in a max heap
+						child_index = right_index if right > left else left_index
+					else: # swap the smaller element in a min heap
+						child_index = right_index if right < left else left_index
 				else:
-					smaller_index = left_index
+					child_index = left_index
 			else:
 				break
-			if self.heap_[smaller_index] > self.heap_[currentIndex]:
-				break
+			if self.maxHeap_:
+				if self.heap_[child_index] < self.heap_[currentIndex]:
+					break
+				else:
+					self.swap(child_index, currentIndex)
 			else:
-				self.swap(smaller_index, currentIndex)
-			currentIndex = smaller_index
+				if self.heap_[child_index] > self.heap_[currentIndex]:
+					break
+				else:
+					self.swap(child_index, currentIndex)
+			currentIndex = child_index
 
 	def heapifyUp(self):
 		'''
@@ -125,16 +136,22 @@ class Heap(object):
 			parent, parent_index = self.getParentOf(currentIndex)
 			if parent is None:
 				break
-			if self.heap_[parent_index] >= self.heap_[currentIndex]:
-				self.swap(parent_index, currentIndex)
+			if self.maxHeap_:
+				if self.heap_[parent_index] <= self.heap_[currentIndex]:
+					self.swap(parent_index, currentIndex)
+				else:
+					break
 			else:
-				break
+				if self.heap_[parent_index] >= self.heap_[currentIndex]:
+					self.swap(parent_index, currentIndex)
+				else:
+					break
 			currentIndex = parent_index
 	def printHeap(self):
 		print(self.heap_[:self.size_])
 
 
-heap = Heap()
+heap = Heap(maxHeap=True)
 heap.addElement(10)
 heap.addElement(15)
 heap.addElement(20)
@@ -142,19 +159,40 @@ heap.addElement(17)
 heap.printHeap()
 heap.addElement(8)
 heap.printHeap()
-heap.poll()
+print(heap.poll())
 heap.printHeap()
 heap.addElement(25)
+heap.printHeap()
+print(heap.poll())
 heap.printHeap()
 heap.addElement(1)
 heap.addElement(2)
 heap.addElement(3)
 heap.printHeap()
-heap.poll()
+print(heap.poll())
 heap.printHeap()
 heap.addElement(18)
 heap.addElement(8)
 heap.printHeap()
-heap.poll()
-heap.poll()
+print(heap.poll())
+print(heap.poll())
+heap.addElement(30)
+heap.addElement(9)
+print(heap.poll())
+heap.addElement(35)
+heap.addElement(32)
+heap.addElement(23)
 heap.printHeap()
+print(heap.poll())
+print(heap.poll())
+print(heap.poll())
+print(heap.poll())
+print(heap.poll())
+print(heap.poll())
+print(heap.poll())
+print(heap.poll())
+print(heap.poll())
+heap.printHeap()
+print(heap.poll())
+heap.printHeap()
+print(heap.poll())
