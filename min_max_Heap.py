@@ -82,7 +82,7 @@ class Heap(object):
 		self.size_ += 1
 		self.heapifyUp()
 
-	def heapifyDown(self):
+	def heapifyDown(self, current=0):
 		'''
 		Largest element is at the top,
 		compare with both children,
@@ -92,7 +92,7 @@ class Heap(object):
 		'''
 		if self.size_ == 0:
 			return
-		currentIndex = 0
+		currentIndex = current
 		left, _ = self.getLeftChildOf(currentIndex)
 		if left is None:
 			return
@@ -147,6 +147,24 @@ class Heap(object):
 				else:
 					break
 			currentIndex = parent_index
+
+	def removeElement(self, element):
+		'''
+		Find if element exists in the list, 
+		pop it out and replace it with the bottom element,
+		and then heapifyDown from that index
+		'''
+		try:
+			index = self.heap_.index(element)
+		except ValueError as e:
+			# print(e) # prints "element is not in list"
+			return
+		elementToRemove = self.heap_[index]
+		self.heap_[index] = self.heap_[self.size_ - 1]
+		self.heap_.pop(self.size_ - 1) # or remove()
+		self.size_ -= 1
+		self.heapifyDown(index)
+
 	def printHeap(self):
 		print(self.heap_[:self.size_])
 
@@ -169,6 +187,10 @@ heap.addElement(1)
 heap.addElement(2)
 heap.addElement(3)
 heap.printHeap()
+heap.addElement(40)
+heap.addElement(45)
+heap.removeElement(8)
+heap.printHeap()
 print(heap.poll())
 heap.printHeap()
 heap.addElement(18)
@@ -179,9 +201,16 @@ print(heap.poll())
 heap.addElement(30)
 heap.addElement(9)
 print(heap.poll())
+heap.printHeap()
 heap.addElement(35)
+heap.printHeap()
 heap.addElement(32)
+heap.printHeap()
 heap.addElement(23)
+heap.printHeap()
+heap.printHeap()
+heap.removeElement(90)
+heap.removeElement(32)
 heap.printHeap()
 print(heap.poll())
 print(heap.poll())
