@@ -52,8 +52,7 @@ def maxProfit(prices, n, k, money_invested):
 def calculateProfit(array, transactions, money_invested):
   print(maxProfit(array, len(array)-1, transactions, money_invested))
 xrp_prices = [x*63 for x in xrp_prices]
-print(xrp_prices[1570:])
+print(xrp_prices[1590:])
 
-
-calculateProfit(xrp_prices, 50, 30000)
+calculateProfit(xrp_prices[1590:], 60, 2000)
 #calculateProfit(a, 1, 10)
