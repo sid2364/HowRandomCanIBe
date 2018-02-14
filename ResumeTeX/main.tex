@@ -1,0 +1,318 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Deedy - One Page Two Column Resume
+% LaTeX Template
+% Version 1.1 (30/4/2014)
+%
+% Original author:
+% Debarghya Das (http://debarghyadas.com)
+%
+% Original repository:
+% https://github.com/deedydas/Deedy-Resume
+%
+% IMPORTANT: THIS TEMPLATE NEEDS TO BE COMPILED WITH XeLaTeX
+%
+% This template uses several fonts not included with Windows/Linux by
+% default. If you get compilation errors saying a font is missing, find the line
+% on which the font is used and either change it to a font included with your
+% operating system or comment the line out to use the default font.
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+% TODO:
+% 1. Integrate biber/bibtex for article citation under publications.
+% 2. Figure out a smoother way for the document to flow onto the next page.
+% 3. Add styling information for a "Projects/Hacks" section.
+% 4. Add location/address information
+% 5. Merge OpenFont and MacFonts as a single sty with options.
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% CHANGELOG:
+% v1.1:
+% 1. Fixed several compilation bugs with \renewcommand
+% 2. Got Open-source fonts (Windows/Linux support)
+% 3. Added Last Updated
+% 4. Move Title styling into .sty
+% 5. Commented .sty file.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Known Issues:
+% 1. Overflows onto second page if any column's contents are more than the
+% vertical limit
+% 2. Hacky space on the first bullet point on the second column.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[]{deedy-resume-openfont}
+
+\usepackage[document]{ragged2e}
+\usepackage{setspace} 
+\usepackage{fancyhdr}
+\begin{document}
+\pagestyle{fancy}
+\fancyhf{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%     LAST UPDATED DATE
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\lastupdated
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%     TITLE NAME
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\namesection{Siddharth}{Sahay}{
+\large{\href{http://github.com/sid2364}{github.com/sid2364}}\\
+\href{mailto:sahaysid@gmail.com}{sahaysid@gmail.com} | +91 9740594884 
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%     COLUMN ONE
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{minipage}[t]{0.32\textwidth} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     EDUCATION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Education} 
+
+\subsection[]{Manipal Institute of \\Technology, Manipal}
+\descript{BTech in Information Technology}
+\location{July 2012 - 2016 \\ Cum. GPA (IT): 7.8}
+\sectionsep
+
+\subsection{Delhi Public School}
+\location{ Bhopal, India \\Graduated May 2012}
+\location{Central Board of Secondary Education - AISSCE}
+\location{Aggregate \%: 87.2}
+\sectionsep
+
+\subsection{Antwerp British School}
+\location{ Antwerp, Belgium \\ Graduated May 2010 }
+\location{International General Certificate of Secondary Education - CIE}
+\location{Grade: A }
+\sectionsep
+\hfill \\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     COURSEWORK
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Coursework}
+\subsection{Undergraduate}
+Artificial Intelligence \\
+Neural Networks \& Fuzzy Logic \\
+Advanced Operating Systems \\
+Data Structures \\
+Network Security \& Cryptography \\
+Advanced Computer Networks \\
+Data Warehousing \& Data Mining\\
+Design \& Analysis of Algorithm \\
+\sectionsep
+\hfill \\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     SKILLS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Skills}
+\subsection{Programming}
+Python \textbullet{}  C \textbullet{} C++ \textbullet{} Java \textbullet{} Shell \\ 
+\location{Familiar with:}
+\textbullet{} System Programming \textbullet{} Android \textbullet{} SQL \textbullet{} Servlets \& JSPs \textbullet{} Embedded C for Microcontrollers \\
+\hfill \\
+\subsection{Software}
+ Docker \textbullet{} Hadoop \textbullet{} Autotools \textbullet{} Vagrant \textbullet{} Git \textbullet{} VirtualBox \textbullet{} VMware Workstation \textbullet{} Atlassian Suite  \textbullet{} Autodesk Maya for Python \\
+\hfill \\
+\subsection{Operating Systems}
+\textbullet{} Linux (Red Hat, Debian) \textbullet{}  Windows \\
+\sectionsep
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%     COLUMN TWO
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{minipage} 
+\hfill
+\begin{minipage}[t]{0.65\textwidth} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     EXPERIENCE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Experience}
+
+\runsubsection{Altair Engineering}
+\descript{| Software Development Engineer }
+\location{July 2016 – Present | Bangalore, Karnataka}
+\vspace{\topsep} % Hacky fix for awkward extra vertical space
+\vspace{0.1cm}
+\begin{tightemize}
+\item Developed and maintained open source code base for PBS Pro, an HPC workload manager, through addressing numerous bugs and implementing many feature enhancements
+\item Ported PBS Pro to Windows as part of the dedicated team for this, through addressing architectural and design changes as well as bugs specifically on this platform
+\item Independently explored and applied Machine Learning techniques to enhance the scheduler for PBS Pro to be more performant and resilient in various scenarios
+\item Modified software build method for generating RPMs
+\item Acted as Scrum Master for a team of five engineers aiding the Agile work flow while delivering a high-performing team that continuously met its goals
+\end{tightemize}
+\sectionsep
+\runsubsection{Altair Engineering}
+\descript{| Software Intern}
+\location{January 2016 - June 2016 | Bangalore, Karnataka}
+\vspace{0.1cm}
+\begin{tightemize}
+\item Implemented modules like SessionManager, JobSession, and other lower level structures and classes in Distributed Resource Management Application API version 2 (DRMAA2) for PBS Pro
+\item Explored Docker for PBS Pro, including how to run jobs in local containers with user requested environments
+\end{tightemize}
+\sectionsep
+\vspace{0.1cm}
+\runsubsection{Toonz Animation India}
+\descript{| Research \& Development Intern }
+\location{May 2015 – June 2015 | Thiruvananthapuram, Kerala}
+\vspace{0.1cm}
+\begin{tightemize}
+\item \normalsize Designed and implemented an Autodesk Maya plugin, Shot Manager, which aided artists with the management of assets and streamlined the animation pipeline for the entire company, using Python, Qt, and Maya Embedded Language (MEL)
+\item \normalsize Implemented simple modules for artists to automate simple tasks on Autodesk Maya
+\item \normalsize Gained knowledge about game development theory and techniques using Unity 3D Game Engine.
+\end{tightemize}
+%\sectionsep
+%\vspace{0.1cm}
+%\runsubsection{India Today Group}
+%\descript{| Database Intern }
+%\location{June 2014 | Noida, Uttar Pradesh}
+%\vspace{0.1cm}
+%\begin{tightemize}
+%\item \normalsize Designed and developed folder purging software using Java and VBScript for Windows, %that is in still in use by engineers for regular day to day work
+%\item \normalsize Maintained servers and monitored server up-time
+%\end{tightemize}
+\sectionsep
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     RESEARCH
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\hfill \\
+\section{Research Work}
+\descript{Hybrid Data Mining Algorithm with Pincer-Search in Cloud Computing using MapReduce Framework Based on Hadoop}
+\location{June 2015 - August 2015 | Manipal Institute of Technology, Manipal}
+\vspace{0.1cm}
+\begin{tightemize}
+\item \normalsize Presented at IEEE International Conference on Advanced Communication, Control and Computing Technologies (ICACCCT ’16) at Ramanathapuram, Tamil Nadu, India (Scopus, Google Scholar, IEEE Digital Explorer)\\ \textbf{\href{http://ieeexplore.ieee.org/document/7831691/}{DOI: 10.1109/ICACCCT.2016.7831691}}\\ 
+\item \normalsize Also accepted by Springer Nature Emerging Research in Computing, Information, Communication and Applications (ERCICA ‘16)
+\end{tightemize}
+\sectionsep
+\end{minipage}
+\hfill \\
+\vspace{0.1cm}
+\footnotesize \centering 1 of 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     AWARDS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{minipage}[]{1\textwidth} 
+\hfill \\
+\hfill \\
+\hfill \\
+\section{Projects} 
+\vspace{0.2cm}
+\begin{tightemize}
+%item starts%
+\item \descript{Dogs vs. Cats}
+\begin{itemize}
+\item \normalsize Built a Machine Learning model to identify and label pictures of cats and dogs using Convolutional Neural Networks and Max-Pooling. Used Tensorflow, TFLearn with Python to achieve almost 95\% accuracy.
+\end{itemize}
+%item ends%
+%item starts%
+\item \descript{Grammar Checker Chatbot}
+\begin{itemize}
+\item \normalsize Developed a chatbot in Python that helps with grammar, including giving corrections for misspelt words, providing suggestions for bad grammar and explanations about common mistakes and usage. Used Python, along with Dialogflow (API AI) for the chatbot framework, and Flask for hosting the server on Heroku for processing user queries.
+\end{itemize}
+%item ends%
+%item starts%
+\item \descript{PyZork}
+\begin{itemize}
+\item \normalsize Made a text based adventure game where you control your character and interact with the game environment through commands. Used Natural Language Processing techniques with Python to interpret user actions and act accordingly. This game also has a customisable map.
+\end{itemize}
+%item ends%
+%item starts%
+\item \descript{Television Segment}
+\begin{itemize}
+\item \normalsize Built a Machine Learning model to identify "watch patterns" with customers from around the country and group them based on these patterns. Customers with similar interests, watch history, search queries, etc. are grouped together into one segment and these segments are useful for determining demographics and potentially enhancing user experience. 
+\end{itemize}
+%item ends%
+%item starts%
+\item \descript{Alumni Portal}
+\begin{itemize}
+\item \normalsize Developed a Java based social media portal for alumni to interact. Has features like creating events, searching for other people on the portal and connecting with them, live news feed, chat, etc.
+\end{itemize}
+%item ends%
+%item starts%
+\item \descript{Finding Waldo}
+\begin{itemize}
+\item \normalsize Built a Machine Learning model to find and draw a bounding box around Waldo from the classic series "Where's Waldo?". Used YOLO (You-Only-Look-Once) version 2 algorithm with convolutional neural networks. Trained on images of Waldo on Darknet for weights needed by YOLO. Also used other open source tools to prepare training data, like BBox-Label-Tool.
+\end{itemize}
+%item ends%
+%item starts%
+\item \descript{Top Trending Hash Tags}
+\begin{itemize}
+\item \normalsize Developed a Python app to get the latest hash tags related to the user input, which could be a word, the title of an article, or an entire Tweet.
+\end{itemize}
+%item ends%
+%item starts%
+\item \descript{Budget Tracker}
+\begin{itemize}
+\item \normalsize Developed an Android app that uses the Tesseract OCR engine to scan bills and receipts to manage your budget. Also allows adding debts and balances with other people.
+\end{itemize}
+%item ends%
+%item starts%
+\item \descript{CryptoWatch}
+\begin{itemize}
+\item \normalsize Developed a simple Android app to monitor cryptocurrency prices; this will notify you when a particular currency reaches a certain price, or becomes stable, when you create and enable alerts for it.
+\end{itemize}
+%item ends%
+\end{tightemize}
+\sectionsep
+
+\section{Courses Completed} 
+\vspace{0.2cm}
+\begin{tightemize}
+\item \normalsize Machine Learning from Udacity
+\item \normalsize Deep Learning from Udacity
+\item \normalsize Full Stack Foundations from Udacity
+\item \normalsize Practical Machine Learning by sentdex
+\item \normalsize Nettech course in Network Management and Security, MIT, Manipal
+\item \normalsize Big Data Analysis using Hadoop by Information Center of MIT, Manipal
+\end{tightemize}
+\sectionsep
+\hfill \\
+\hfill \\
+\hfill \\
+\hfill \\
+\hfill \\
+\hfill \\
+\hfill \\
+\vspace{0.15cm}
+\footnotesize \centering 2 of 2
+\end{minipage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     SOCIETIES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\section{Societies} 
+
+%\begin{tabular}{rll}
+%2014 	& top 12\%ile    & Tau Beta Pi Engineering Honor Society\\
+%2014   & National   & The Global Leadership and Education Forum (tGELF)\\
+%2012   &  National  & Golden Key International Honor Society\\
+%2012   &  National   & National Society of Collegiate Scholars\\
+%\end{tabular}
+%\sectionsep
+
+
+\end{document}  \documentclass[]{article}
